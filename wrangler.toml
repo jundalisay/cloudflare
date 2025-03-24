@@ -1,0 +1,10 @@
+name = "circle"
+compatibility_date = "2024-03-24"
+main = ".svelte-kit/output/server/index.js"
+
+#2 "workers-site/index.js"
+
+[site]
+bucket = ".svelte-kit/cloudflare"
+
+# bucket = ".svelte-kit/output/server/index.js"

@@ -11,7 +11,7 @@
 
  <!-- bg-gradient-to-br from-purple-600 to-indigo-800 text-white -->
 <div class="flex flex-col items-center justify-center h-screen text-center">
-  <img src="/pp.png" class="w-24 h-24 mb-4 animate-bounce">
+  <img src="/pp.png" alt="icon" class="w-24 h-24 mb-4 animate-bounce">
 <!--   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"

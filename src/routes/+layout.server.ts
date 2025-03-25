@@ -1,31 +1,53 @@
-// src/routes/+layout.server.ts
 import type { LayoutServerLoad } from './$types';
-import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
+import { redirect } from '@sveltejs/kit';
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
-  // Clean expired sessions occasionally (1 in 10 requests)
-  if (Math.random() < 0.1) {
-    cleanExpiredSessions().catch(console.error);
-  }
+
+// export const load: LayoutServerLoad = async ({ cookies }) => {
+//     const session = cookies.get('session');
+// };
+
+    // console.log('session:', session.id);
+    // return {
+    //     user: session ? { id: '123', name: 'John Doe' } : null
+    // };
+
+
+
+
+
+
+// // src/routes/+layout.server.ts
+// import type { LayoutServerLoad } from './$types';
+// import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
+
+// export const load: LayoutServerLoad = async ({ cookies }) => {
+
+//   console.log('loading layout');
+//   // Clean expired sessions occasionally (1 in 10 requests)
+//   if (Math.random() < 0.1) {
+//     cleanExpiredSessions().catch(console.error);
+//   }
   
-  const sessionId = cookies.get('sessionId');
+//   const sessionId = cookies.get('sessionId');
   
-  if (sessionId) {
-    const result = await validateSession(sessionId);
+//   if (sessionId) {
+//     const result = await validateSession(sessionId);
     
-    if (result.valid) {
-      return { user: result.user };
-    } else {
-      // Invalid or expired session, clear the cookie
-      cookies.delete('sessionId', { path: '/' });
-    }
-  }
+//     if (result.valid) {
+//       return { user: result.user };
+//     } else {
+//       // Invalid or expired session, clear the cookie
+//       cookies.delete('sessionId', { path: '/' });
+//     }
+//   }
   
-  return { user: null };
+//   return { user: null };
 
-  console.log('outout:', user);
+//   console.log('outout:', user);
 
-};
+// };
+
+
 
 // // src/routes/+layout.server.ts
 // import type { LayoutServerLoad } from './$types';

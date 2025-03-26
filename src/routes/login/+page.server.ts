@@ -6,11 +6,11 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ cookies }) => {
 
     // Get the session token from cookies
-    const sessionToken = cookies.get('session');
+    // const sessionToken = cookies.get('session');
 
-    if (!sessionToken) {
-        throw redirect(302, '/login');
-    }
+    // if (!sessionToken) {
+    //     throw redirect(302, '/login');
+    // }
 
 
 // export const load: PageServerLoad = async ({ parent }) => {

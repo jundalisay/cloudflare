@@ -2,6 +2,7 @@
 import { json } from '@sveltejs/kit';
 import { loginUser } from '$lib/server/auth';
 
+
 export async function POST({ request, cookies }) {
   const { username, password } = await request.json();
   
@@ -26,10 +27,6 @@ export async function POST({ request, cookies }) {
   
   return json({ success: true, user: result.user });
 }
-
-
-
-
 
 
 // // src/routes/api/auth/login/+server.ts

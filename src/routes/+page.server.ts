@@ -1,17 +1,11 @@
-// import type { PageServerLoad } from './$types';
-// export const load: PageServerLoad = async ({ locals }) => {
-//   return {
-//     user: locals.user
-//   };
-// };
 import * as auth from '$lib/server/auth';
-import * as auth from '$lib/server/auth';
+import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
 import { fail, redirect, json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
-import { posts } from '$lib/server/db/schema';
+import { posts, users } from '$lib/server/db/schema';
+import { eq, desc } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
-import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
+
 
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -38,16 +32,26 @@ export const load: PageServerLoad = async ({ cookies }) => {
       
     }
   } else {
-          throw redirect(302, '/login');
+      throw redirect(302, '/login');
   }
 
-  return {};
+  // const results = await db
+  //   .select({
+  //     id: posts.id,
+  //     content: posts.content,
+  //     created_at: posts.created_at,
+  //     user: {
+  //       username: users.username,
+  //       avatar_url: users.avatar_url,
+  //     },
+  //   })
+  //   .from(posts)
+  //   .leftJoin(users, eq(posts.user_id, users.id))
+  //   .orderBy(desc(posts.created_at));
+
+  const items = await db.select().from(posts);
+  return { items };
 };
 
 
-// export async function POST({ request }) {
-//   const data = await request.json();
-//   await db.insert(posts).values(data);
-//   return json({ success: true });
-// }
 

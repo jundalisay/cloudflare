@@ -13,15 +13,15 @@ import {
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
+  codename: text('codename').unique(),
   username: text('username').notNull().unique(),
   password: text('password').notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+  pin: integer('pin'),
+  phone: text('phone'),
+  email: text('email'),
+  avatar: text('avatar'),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
-
-export const userRelations = relations(users, ({ many }) => ({
-  sessions: many(sessions),
-}));
-
 
 
 
@@ -32,45 +32,12 @@ export const sessions = sqliteTable('sessions', {
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
 
-export const sessionRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
-  }),
-}));
-
-
-
-// export const user = sqliteTable('user', {
-//   id: text('id').primaryKey(),
-//   codename: text('codename').unique(),
-//   username: text('username').notNull().unique(),
-//   pin: integer('pin'),
-//   phone: text('phone'),
-//   email: text('email'),
-//   passwordHash: text('password_hash').notNull(),
-//   date_created: integer('date_created', { mode: 'timestamp' }) 
-//   // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
-// });
-
-
-// export const session = sqliteTable('session', {
-//   id: text('id').primaryKey(),
-//   userId: text('user_id')
-//     .notNull()
-//     .references(() => user.id),
-//   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
-//   // date_created: integer('date_created', { mode: 'timestamp' }) 
-//   // ,
-//   // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
-// });
 
 export const posts = sqliteTable('posts', {
   id: text('id').primaryKey(),
   content: text('content').notNull(),
-  // user_id: text('user_id').references(() => user.id).notNull(),
-  date_created: integer('date_created', { mode: 'timestamp' }) 
-  // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
+  user_id: text('user_id').references(() => user.id).notNull(),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),  
 });
 
 
@@ -84,9 +51,8 @@ export const products = sqliteTable('products', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
-  // user_id: text('user_id').references(() => user.id).notNull(),
-  date_created: integer('date_created', { mode: 'timestamp' }) 
-  // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
+  user_id: text('user_id').references(() => user.id).notNull(),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
 
 
@@ -100,9 +66,8 @@ export const services = sqliteTable('services', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
-  // user_id: text('user_id').references(() => user.id).notNull(),
-  date_created: integer('date_created', { mode: 'timestamp' }) 
-  // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
+  user_id: text('user_id').references(() => user.id).notNull(),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
 
 
@@ -116,6 +81,7 @@ export const transactions = sqliteTable('transactions', {
   notes: text('notes'),
   kind: text('kind'),
   status: text('status'),
+  user_id: text('user_id').references(() => user.id).notNull(),  
   // transferee_id: text('user_id').references(() => user.id),
   // giver_id: text('user_id').references(() => user.id).notNull(),
   // getter_id: text('user_id').references(() => user.id).notNull(), 
@@ -123,7 +89,27 @@ export const transactions = sqliteTable('transactions', {
   date_cancelled: integer('date_cancelled', { mode: 'timestamp' }),
   date_transferred: integer('date_transferred', { mode: 'timestamp' }),
   date_modified: integer('date_modified', { mode: 'timestamp' }),
-  date_created: integer('date_created', { mode: 'timestamp' })
-//   date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
+
+
+
+// RELATIONS
+
+export const userRelations = relations(users, ({ many }) => ({
+  sessions: many(sessions),
+  posts: many(posts),
+}));
+
+
+export const postsRelations = relations(posts, ({ one }) => ({
+  user: one(users, { fields: [posts.user_id], references: [users.id] }),
+}));
+
+export const sessionRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}));
 

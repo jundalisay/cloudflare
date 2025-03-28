@@ -82,7 +82,7 @@ Hi, {data.user.username}!
 </a>
 </li>
 
-
++0
 
 <form method="POST" action="/logout">
   <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">

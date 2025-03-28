@@ -1,54 +1,75 @@
 import * as auth from '$lib/server/auth';
-import { fail, redirect } from '@sveltejs/kit';
+import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
+import { fail, redirect, json } from '@sveltejs/kit';
+import { db } from '$lib/server/db';
+import { users } from '$lib/server/db/schema';
+import { eq, desc } from 'drizzle-orm';
+import { signOutUser } from '$lib/server/auth';
 import type { Actions, PageServerLoad } from './$types';
 
 
-// export const load: PageServerLoad = async (event) => {
-// 	if (!event.locals.user) {
-// 		return redirect(302, '/login');
-// 	}
-// 	return { user: event.locals.user };
-// };
 
-export const load: PageServerLoad = async ({ locals, parent }) => {
-  const { user } = await parent();
-  if (user) {
-    throw redirect(302, '/');
+export const load: PageServerLoad = async ({ cookies }) => {
+
+  // Clean expired sessions occasionally (1 in 10 requests)
+  if (Math.random() < 0.1) {
+    cleanExpiredSessions().catch(console.error);
   }
-  return {};
+  
+  const sessionId = cookies.get('sessionId');
+  console.log('output:', sessionId);
+
+  if (sessionId) {
+    const result = await validateSession(sessionId);
+    if (result.valid) {
+
+      return { user: result.user };
+
+    } else {
+
+      // Invalid or expired session, clear the cookie
+      cookies.delete('sessionId', { path: '/' });
+      throw redirect(302, '/login');
+      
+    }
+  } else {
+      throw redirect(302, '/login');
+  }
+
 };
 
 
-// export const load: PageServerLoad = async ({ cookies }) => {
-//     const session = cookies.get('session');
-
-//     if (!session) {
-//         throw redirect(302, '/login');
+// export const actions: Actions = {
+//   default: async ({ cookies }) => {
+//     const sessionId = cookies.get('sessionId');
+    
+//     if (sessionId) {
+//       await signOutUser(sessionId);
 //     }
-//   return {};
-//     // return {
-//     //     user: { id: '123', name: 'John Doe' }
-//     // };
+    
+//     cookies.delete('sessionId', { path: '/' });
+//     throw redirect(302, '/login');
+//   }
 // };
+
+// // If you want to access this page directly, redirect to home
+// export function load() {
+//   throw redirect(302, '/');
+// }
+
+
+
 
 
 export const actions: Actions = {
     logout: async ({ cookies }) => {
-        cookies.delete('session', { path: '/' }); // Delete the session cookie
-        throw redirect(303, '/'); // Redirect to root
+        const sessionId = cookies.get('auth_session'); // Adjust for your session cookie
+
+        if (sessionId) {
+            await signOutUser(sessionId);
+            cookies.delete('auth_session', { path: '/' });
+        }
+
+        throw redirect(303, '/login'); // Redirect after logout
     }
 };
-
-
-
-// export const actions: Actions = {
-// 	logout: async (event) => {
-// 		if (!event.locals.session) {
-// 			return fail(401);
-// 		}
-// 		await auth.invalidateSession(event.locals.session.id);
-// 		auth.deleteSessionTokenCookie(event);
-
-// 		return redirect(302, '/');
-// 	}
-// };

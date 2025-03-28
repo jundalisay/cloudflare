@@ -19,11 +19,15 @@
 
 
 
+
+
 <div class="flex min-h-screen w-full flex-col bg-gray-100">
   <div class="fixed bottom-4 left-4 z-10">
-    <a href={$menuHref} class="group flex h-9 w-9 shrink-0 items-center justify-center">
-      <img src={$menuIcon} alt="Menu Icon">
-    </a>
+    {#if $page.url.pathname !== '/login' && $page.url.pathname !== '/register'}
+      <a href={$menuHref} class="group flex h-9 w-9 shrink-0 items-center justify-center">
+        <img src={$menuIcon} alt="Menu Icon">
+      </a>
+    {/if}    
   </div>
   <div class="flex flex-col sm:gap-4 sm:py-2 sm:pl-14">
     <main>    

@@ -11,13 +11,46 @@ import {
 } from 'drizzle-orm/sqlite-core';
 
 
+
+export const users = sqliteTable('users', {
+  id: text('id').primaryKey(),
+  codename: text('codename').unique(),
+  username: text('username').notNull().unique(),
+  password: text('password').notNull(),
+  pin: integer('pin'),
+  phone: text('phone'),
+  email: text('email'),
+  avatar: text('avatar'),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+});
+
+
+
 export const posts = sqliteTable('posts', {
   id: text('id').primaryKey(),
   content: text('content').notNull(),
-  // user_id: text('user_id').references(() => user.id).notNull(),
+  user_id: text('user_id').references(() => user.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }) 
   // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
 });
+
+
+export const products = sqliteTable('products', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  measure: text('measure').notNull(),
+  points: integer('points').notNull(),
+  category: integer('category'),  
+  photo: text('photo'),
+  photo1: text('photo1'),
+  photo2: text('photo2'),
+  photo3: text('photo3'),     
+  description: text('description'),
+  short_description: text('short_description'),
+  user_id: text('user_id').references(() => users.id).notNull(),
+  date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+});
+
 
 
 const today = new Date();
@@ -30,16 +63,24 @@ const client = createClient({ url: "file:local.db" });
 // Setup relations for the ORM
 export const db = drizzle(client, { posts });
 
+const [firstUser] = await db.select().from(users).limit(1);
+
 
 async function seed() {
   try {
     // Optionally, you might want to clear existing data
     await db.delete(posts).execute();
+    await db.delete(products).execute();
 
     // Insert seed data
     await db.insert(posts).values([
-      { id: '1', content: 'Alice age: 28', date_created: today },
-      { id: '2', content: 'Bob, age: 35', date_created: today }
+      { id: '1', content: 'Alice age: 28', date_created: today, user_id: firstUser.id },
+      { id: '2', content: 'Bob, age: 35', date_created: today, user_id: firstUser.id }
+    ]).execute();
+
+    await db.insert(products).values([
+      { id: '1', name: 'Banana', photo: '/bananas.jpg', measure: 'kilo', points: 1, date_created: today, user_id: firstUser.id },
+      { id: '2', name: 'Banh Cuon', photo: '/banh.jpg', measure: 'dish', points: 2, date_created: today, user_id: firstUser.id }
     ]).execute();
 
     console.log('Seeding complete!');

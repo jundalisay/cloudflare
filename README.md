@@ -41,3 +41,62 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+
+
+<script>
+  let password = '';
+  let showPassword = false;
+  let errors = { password: '' }; // Replace with your actual error state
+</script>
+
+<div class="relative">
+  <Input 
+    type={showPassword ? 'text' : 'password'}
+    name="password"
+    label="Password"
+    bind:value={password}
+    error={errors.password}
+    required
+  />
+
+  <!-- Toggle visibility button -->
+  <button
+    type="button"
+    class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500"
+    onclick={() => (showPassword = !showPassword)}
+  >
+    {showPassword ? 'Hide' : 'Show'}
+  </button>
+</div>
+
+
+
+---
+
+import { db } from '$lib/server/db'; // Adjust import based on your setup
+import { users, posts } from '$lib/server/schema'; // Your Drizzle schema
+import { eq } from 'drizzle-orm';
+
+const today = new Date().toISOString();
+
+// Get the first user from the users table
+const [firstUser] = await db.select().from(users).limit(1);
+
+if (!firstUser) {
+  throw new Error('No users found — seed users before posts.');
+}
+
+// Use the first user's ID for post insertion
+await db.insert(posts).values([
+  {
+    id: '1',
+    content: 'Alice age: 28',
+    date_created: today,
+    user_id: firstUser.id // Use the actual user ID from the DB
+  },
+  // Add more post objects if needed
+]).execute();
+
+console.log('✅ Seeded posts with user ID:', firstUser.id);
+

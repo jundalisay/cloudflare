@@ -3,7 +3,7 @@
 
   const { data } = $props(); 
 
-  console.log('feed: ', data.items);
+  // console.log('feed: ', data.items);
 
 
   function formatTimestamp(timestamp) {

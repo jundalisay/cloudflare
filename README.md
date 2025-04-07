@@ -100,3 +100,41 @@ await db.insert(posts).values([
 
 console.log('✅ Seeded posts with user ID:', firstUser.id);
 
+
+
+
+
+<!-- 
+<header class="fixed bottom-6 right-6 z-50">
+  <MenuButton menuIcon="1.png" menuHref="/menu" />
+</header> -->
+
+<!-- <div class="flex min-h-screen w-full flex-col bg-gray-100">
+  <div class="fixed bottom-4 left-4 z-10">
+    {#if $page.url.pathname !== '/login' && $page.url.pathname !== '/register'}
+      <div class="relative">
+        <a href={menuHref} class="group flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg transition hover:scale-110 active:scale-95 duration-200">
+          <img src={menuIcon} alt="Menu Icon" class="h-6 w-6" />
+        </a>
+
+        {#if showBubble}
+          <div
+            in:fly={{ y: 8, duration: 300 }}
+            out:fade={{ duration: 200 }}
+            class="absolute -top-12 left-1/2 -translate-x-1/2 rounded-xl bg-black px-3 py-1 text-sm text-white shadow-md"
+          >
+            Tap here for menu
+            <div class="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-black"></div>
+          </div>
+        {/if}
+      </div>
+    {/if}
+  </div>
+
+  <div class="flex flex-col sm:gap-4 sm:py-2 sm:pl-14">
+    <main>
+      {@render children()}
+    </main>
+  </div>
+</div>
+ -->

@@ -31,7 +31,7 @@
 
 
 
-<div class="flex min-h-screen w-full flex-col bg-gray-100">
+<div class="flex min-h-screen w-full flex-col bg-sky-50">
   <div class="fixed bottom-4 right-4 z-10">
     {#if $page.url.pathname !== '/login' && $page.url.pathname !== '/register'}
       <a href={$menuHref} class="group flex h-9 w-9 shrink-0 items-center justify-center">

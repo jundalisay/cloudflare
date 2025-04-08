@@ -43,7 +43,7 @@
     </p>
 
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+    <div class="grid grid-cols-2 gap-4 p-4">
        {#each menuItems as card, i (card.name)}
         <a href={card.href} class="group block rounded-xl bg-white shadow-md hover:shadow-lg transition duration-200 p-6 text-center">
           <div class="flex flex-col items-center justify-center h-full">

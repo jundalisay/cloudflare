@@ -8,20 +8,29 @@
   
   let username = '';
   let password = '';
+  let codename = '';
+  let pin = ''; 
   let confirmPassword = '';
-  let errors = { username: '', password: '', confirmPassword: '', form: '' };
+  let errors = { codename: '', pin:'', username: '', password: '', confirmPassword: '', form: '' };
   let loading = false;
   
+
+  // function handlePinInput(event) {
+  //   // Allow only digits and trim to 6 characters max
+  //   pin.set(event.target.value.replace(/\D/g, '').slice(0, 6));
+  // }
   async function handleSubmit() {
     // Reset errors
-    errors = { username: '', password: '', confirmPassword: '', form: '' };
+    errors = { codename: '', pin:'', username: '', password: '', confirmPassword: '', form: '' };
     
     // Basic validation
+    if (!codename) errors.codename = 'Codename is required';
+    if (!pin) errors.pin = 'PIN is required';
     if (!username) errors.username = 'Username is required';
     if (!password) errors.password = 'Password is required';
     if (password.length < 6) errors.password = 'Password must be at least 6 characters';
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match';
-    if (errors.username || errors.password || errors.confirmPassword) return;
+    if (errors.codename || errors.pin || errors.username || errors.password || errors.confirmPassword) return;
     
     loading = true;
     
@@ -67,7 +76,27 @@
     error={errors.username}
     required
   />
-  
+
+  <Input 
+    type="text"
+    name="codename"
+    label="Codename"
+    bind:value={codename}
+    error={errors.codename}
+    required
+  />
+
+  <Input 
+    type="password"
+    name="pin"
+    label="Pin (6-digits)"
+    bind:value={pin}
+    error={errors.pin}
+    maxlength="6"
+    inputmode="numeric"
+    required
+  />
+
   <Input 
     type="password"
     name="password"
@@ -87,7 +116,7 @@
   />
   
   <div>
-    <Button type="submit" disabled={loading}>
+    <Button type="submit" class="w-full text-white px-4 py-2 rounded-lg" disabled={loading}>
       {loading ? 'Registering...' : 'Register'}
     </Button>
   </div>

@@ -6,19 +6,13 @@ import { eq, or, and, like, gte, lte, desc } from 'drizzle-orm';
 // import * as table from '$lib/server/db/schema';
 import type { Actions, PageServerLoad } from './$types';
 import { CATEGORY_IDS } from '$lib/constants';
+import { loadWithSession } from '$lib/util';
 
 
-// export const load: PageServerLoad = async ({ fetch }) => {
-//   // return {
-//   //   user: locals.user
-//   // };
-//   const items = await db.select().from(products);
-//   return { items };
-// };
+export const load: PageServerLoad = async (url, event) => {
+  return loadWithSession(event);
 
-
-
-export const load: PageServerLoad = async ({ url }) => {
+//export const load: PageServerLoad = async ({ url }) => {
   const searchQuery = url.searchParams.get('search') || '';
   // const category = url.searchParams.get('category') || '';
   const categoryId = url.searchParams.get('category') ? Number(url.searchParams.get('category')) : null;

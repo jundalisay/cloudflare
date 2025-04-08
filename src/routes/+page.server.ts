@@ -52,6 +52,3 @@ export const load: PageServerLoad = async ({ cookies }) => {
   const items = await db.select().from(posts);
   return { items };
 };
-
-
-

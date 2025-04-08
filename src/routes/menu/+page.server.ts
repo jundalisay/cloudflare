@@ -37,8 +37,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
   }
 
 };
-
-
 // export const actions: Actions = {
 //   default: async ({ cookies }) => {
 //     const sessionId = cookies.get('sessionId');
@@ -56,10 +54,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 // export function load() {
 //   throw redirect(302, '/');
 // }
-
-
-
-
 
 export const actions: Actions = {
     logout: async ({ cookies }) => {

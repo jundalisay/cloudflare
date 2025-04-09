@@ -1,4 +1,52 @@
-<script lang="ts">
+
+<script>
+  import { goto } from '$app/navigation';
+  export let data;
+
+  function handleBarter() {
+    // goto(`/transactions?product_id=${data.product.id}`);
+  }
+
+  function edit(id) {
+    goto(`/products/${id}/edit`);
+  }  
+</script>
+
+
+
+<div class="p-6 max-w-xl mx-auto">
+
+  <div class="rounded-t-2xl overflow-hidden">
+    <img
+      src={data.product.photo}
+      alt="Disease photo"
+      class="w-full h-64 object-cover"
+    />
+  </div>
+
+  <div class="bg-white p-6 rounded-b-xl shadow border border-gray-200">
+
+
+    <h1 class="text-2xl font-bold text-gray-800">{data.product.name}</h1>
+    <p class="text-gray-600 mt-2">{data.product.description}</p>
+
+    {#if data.isOwner}
+        <button class="px-4 py-2 bg-green-600 w-full text-white rounded-lg hover:bg-green-700 transition" on:click={handleBarter}>
+          Transact
+        </button>
+
+        <button class="my-4 px-4 py-2 bg-blue-600 w-full text-white rounded-lg hover:bg-blue-700 transition" on:click={edit(data.product.id)}>
+          Edit Product
+        </button>
+    {/if}
+  </div>
+</div>
+
+
+
+
+
+<!-- <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import type { PageData } from './$types';
   import { getCategoryName } from '$lib/constants';
@@ -60,5 +108,7 @@
     </div>
   </div>
 </div>
+ -->
+
 
 

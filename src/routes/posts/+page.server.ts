@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
   }
   
   const sessionId = cookies.get('sessionId');
-  console.log('output:', sessionId);
+
 
   if (sessionId) {
     const result = await validateSession(sessionId);

@@ -29,7 +29,7 @@
 
 
 
-<div class="container mx-auto p-4">
+<div class="max-w-2xl mx-auto p-4 py-6">
   <h1 class="text-2xl font-bold mb-4">Latest Posts</h1>
 
   {#each data.items as post}

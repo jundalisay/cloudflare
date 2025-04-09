@@ -14,6 +14,7 @@ import {
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
+  // id: integer('id').primaryKey({ autoIncrement: true }),
   codename: text('codename').unique(),
   username: text('username').notNull().unique(),
   password: text('password').notNull(),
@@ -35,15 +36,19 @@ export const sessions = sqliteTable('sessions', {
 
 
 export const posts = sqliteTable('posts', {
-  id: text('id').primaryKey(),
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  // id: text('id').primaryKey(),
   content: text('content').notNull(),
+  name: text('name').notNull(),
+  photo: text('photo'),  
   user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),  
 });
 
-
+// name measure points yser)ud 
 export const products = sqliteTable('products', {
-  id: text('id').primaryKey(),
+  // id: text('id').primaryKey(),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   measure: text('measure').notNull(),
   points: integer('points').notNull(),
@@ -54,13 +59,16 @@ export const products = sqliteTable('products', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
+  username: text('username'),
+  avatar: text('avatar'),  
   user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
 
 
 export const services = sqliteTable('services', {
-  id: text('id').primaryKey(),
+  // id: text('id').primaryKey(),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   points: integer('points').notNull(),
   photo: text('photo'),
@@ -75,7 +83,8 @@ export const services = sqliteTable('services', {
 
 
 export const transactions = sqliteTable('transactions', {
-  id: text('id').primaryKey(),
+  // id: text('id').primaryKey(),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   points: integer('points').notNull(),
   measure: text('measure').notNull(),  

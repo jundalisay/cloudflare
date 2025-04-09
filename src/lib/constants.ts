@@ -12,3 +12,4 @@ export function getCategoryName(categoryId: number): string {
 }
 
 
+// console.log('cat:', categoryId);

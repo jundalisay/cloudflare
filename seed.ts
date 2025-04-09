@@ -29,9 +29,10 @@ export const users = sqliteTable('users', {
 export const posts = sqliteTable('posts', {
   id: text('id').primaryKey(),
   content: text('content').notNull(),
+  name: text('name').notNull(),
+  photo: text('photo'),  
   user_id: text('user_id').references(() => user.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }) 
-  // date_created: text("date_created").default(sql`CURRENT_TIMESTAMP`)
 });
 
 
@@ -47,6 +48,8 @@ export const products = sqliteTable('products', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
+  username: text('username'),
+  avatar: text('avatar'),  
   user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
@@ -74,13 +77,13 @@ async function seed() {
 
     // Insert seed data
     await db.insert(posts).values([
-      { id: '1', content: 'Alice age: 28', date_created: today, user_id: firstUser.id },
-      { id: '2', content: 'Bob, age: 35', date_created: today, user_id: firstUser.id }
+      { id: '1', name: 'Lam', photo: 'lam.jpg', content: 'Unlike the money system which is competitive, since everyone is after money instead of goods and services, the moneyless system is cooperative because people go directly for goods and services of people.', date_created: today, user_id: firstUser.id },
+      { id: '2', name: 'Jun', photo: 'jun.jpg', content: 'The system also has a money-version while the world transitions from centralized finance with the USD as international currency, to the proper moneyless free trade.', date_created: today, user_id: firstUser.id }
     ]).execute();
 
     await db.insert(products).values([
-      { id: '1', name: 'Banana', photo: '/bananas.jpg', measure: 'kilo', points: 1, date_created: today, user_id: firstUser.id },
-      { id: '2', name: 'Banh Cuon', photo: '/banh.jpg', measure: 'dish', points: 2, date_created: today, user_id: firstUser.id }
+      { id: '1', username: 'Jun', avatar: 'jun.jpg', name: 'Banana', photo: '/bananas.jpg', measure: 'kilo', points: 1, date_created: today, user_id: firstUser.id },
+      { id: '2', username: 'Jun', avatar: 'jun.jpg', name: 'Banh Cuon', photo: '/banh.jpg', measure: 'dish', points: 2, date_created: today, user_id: firstUser.id }
     ]).execute();
 
     console.log('Seeding complete!');

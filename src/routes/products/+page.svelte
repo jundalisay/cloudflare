@@ -63,11 +63,18 @@
     maxPrice = 1000;
     showFilters = false;
   }
+
+  function go() {
+    goto(`/products/new`);
+  }
+
 </script>
+
+
 
 <div class="container mx-auto p-4">
   <h1 class="text-3xl font-bold mb-8">Products</h1>
-  
+
   <div class="flex flex-col md:flex-row gap-4 mb-8">
     <!-- Search Bar -->
     <div class="flex-1">
@@ -93,7 +100,7 @@
     <!-- Filter Button -->
     <div>
       <button
-        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-2 transition-colors duration-200"
+        class="px-4 py-2 bg-blue-600 hover:bg-blue-200 text-white rounded-lg flex items-center gap-2 transition-colors duration-200"
         on:click={() => showFilters = !showFilters}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,6 +109,8 @@
         Filters
       </button>
     </div>
+
+    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg flex items-center gap-2 transition-colors duration-200" on:click={() => go()}>+ New</button>
   </div>
   
   <!-- Filter Panel -->
@@ -229,7 +238,7 @@
         <div class="p-4">
           <h3 class="text-lg font-semibold mb-1 group-hover:text-blue-600 transition-colors duration-200">{product.name}</h3>
           <p class="text-xl font-bold text-blue-600">{product.points}</p>
-          <div class="text-sm text-gray-500 mt-1">{getCategoryName(product.categoryId)}</div>
+          <div class="text-sm text-gray-500 mt-1">{getCategoryName(product.category)}</div>
           <!-- <div class="text-sm text-gray-500 mt-1">{product.category}</div> -->
         </div>
       </a>

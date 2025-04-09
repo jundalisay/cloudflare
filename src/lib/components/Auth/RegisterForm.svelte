@@ -21,7 +21,7 @@
   // }
   async function handleSubmit() {
     // Reset errors
-    errors = { codename: '', pin:'', username: '', password: '', confirmPassword: '', form: '' };
+    errors = { form: '', codename: '', pin:'', username: '', password: '', confirmPassword: '' };
     
     // Basic validation
     if (!codename) errors.codename = 'Codename is required';
@@ -38,7 +38,7 @@
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, codename, pin, password })
       });
       
       const result = await response.json();
@@ -59,6 +59,8 @@
   }
 </script>
 
+
+
 <form on:submit|preventDefault={handleSubmit} class="space-y-6">
   <h2 class="text-2xl font-bold text-center">Create an Account</h2>
   
@@ -67,6 +69,7 @@
       {errors.form}
     </div>
   {/if}
+
   
   <Input 
     type="text"

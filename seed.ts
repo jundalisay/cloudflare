@@ -77,8 +77,7 @@ async function seed() {
 
     // Insert seed data
     await db.insert(posts).values([
-      { id: '1', name: 'Lam', photo: 'lam.jpg', content: 'Unlike the money system which is competitive, since everyone is after money instead of goods and services, the moneyless system is cooperative because people go directly for goods and services of people.', date_created: today, user_id: firstUser.id },
-      { id: '2', name: 'Jun', photo: 'jun.jpg', content: 'The system also has a money-version while the world transitions from centralized finance with the USD as international currency, to the proper moneyless free trade.', date_created: today, user_id: firstUser.id }
+      { id: '1', name: 'Lam', photo: 'lam.jpg', content: 'Welcome to Pantrypoints!', date_created: today, user_id: firstUser.id },
     ]).execute();
 
     await db.insert(products).values([

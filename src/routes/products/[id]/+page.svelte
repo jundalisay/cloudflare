@@ -16,6 +16,13 @@
 
 <div class="p-6 max-w-xl mx-auto">
 
+  <div class="fixed bottom-4 left-4 z-10">
+    <span class="uppercase font-bold text-sm text-gray-600">Back</span>
+    <a href="/products" class="group flex h-9 w-9 shrink-0 items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    </a>
+  </div>
+
   <div class="rounded-t-2xl overflow-hidden">
     <img
       src={data.product.photo}

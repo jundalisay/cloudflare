@@ -15,7 +15,6 @@ export default defineConfig({
 });
 
 
-
 // export default {
 //   schema: './src/lib/server/schema.ts',
 //   out: './drizzle',

@@ -21,7 +21,7 @@ export const users = sqliteTable('users', {
   pin: integer('pin'),
   phone: text('phone'),
   email: text('email'),
-  avatar: text('avatar').default('avatar.svg'),
+  avatar: text('avatar').default('/avatar.svg'),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
 
@@ -40,7 +40,7 @@ export const posts = sqliteTable('posts', {
   // id: text('id').primaryKey(),
   content: text('content').notNull(),
   name: text('name').notNull(),
-  photo: text('photo').default('none.svg'),
+  photo: text('photo').default('/none.svg'),
   user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),  
 });

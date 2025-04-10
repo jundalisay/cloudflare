@@ -3,13 +3,37 @@
   import { goto } from '$app/navigation';
   export let data;
 
-  function handleBarter() {
-    // goto(`/transactions?product_id=${data.product.id}`);
+  // async function handleBarter(name, userId, points, measure) {
+  //   const params = new URLSearchParams();
+  //   params.set('name', name);
+  //   params.set('userId', userId);
+  //   params.set('points', points.toString());
+  //   params.set('measure', measure);
+
+  //   console.log('params:', params);
+  //   await goto(`/transactions/new?${params.toString()}`);
+  // }
+
+  function handleBarter(name, userId, points, measure) {
+    // Build query string from params
+    const query = new URLSearchParams({
+      name,
+      userId,
+      points,
+      measure
+    }).toString();
+
+    // Navigate to the route with query params
+    goto(`/transactions/new?${query}`);
+  }
+
+  function barter(id, name, measure, points) {
+    goto(`/transactions/new?id=${id}&name=${name}&measure=${measure}&points=${points}`);
   }
 
   function edit(id) {
     goto(`/products/${id}/edit`);
-  }  
+  }
 </script>
 
 
@@ -26,7 +50,7 @@
   <div class="rounded-t-2xl overflow-hidden">
     <img
       src={data.product.photo}
-      alt="Disease photo"
+      alt={data.product.name}
       class="w-full h-64 object-cover"
     />
   </div>
@@ -34,18 +58,21 @@
   <div class="bg-white p-6 rounded-b-xl shadow border border-gray-200">
 
 
-    <h1 class="text-2xl font-bold text-gray-800">{data.product.name}</h1>
-    <p class="text-gray-600 mt-2">{data.product.description}</p>
+    <h1 class="text-2xl font-bold text-gray-800 pb-6">{data.product.name}</h1>
 
-    {#if data.isOwner}
-        <button class="px-4 py-2 bg-green-600 w-full text-white rounded-lg hover:bg-green-700 transition" on:click={handleBarter}>
+      {#if data.isOwner}
+        <button class="px-4 py-2 bg-green-600 w-full text-white rounded-lg hover:bg-green-700 transition" on:click={
+          barter(data.product.id, data.product.name, data.product.measure, data.product.points)}>
+          <!-- handleBarter(data.product.name, data.product.user_id. data.product.points, data.product.measure)}> -->
           Transact
         </button>
 
-        <button class="my-4 px-4 py-2 bg-blue-600 w-full text-white rounded-lg hover:bg-blue-700 transition" on:click={edit(data.product.id)}>
-          Edit Product
+        <button class="my-4 px-4 py-2 bg-blue-600 w-full text-white rounded-lg hover:bg-blue-700 transition" on:click={() => edit(data.product.id)}>
+          Edit
         </button>
-    {/if}
+      {/if}
+
+    <p class="text-gray-600 mt-2">{data.product.description}</p>
   </div>
 </div>
 

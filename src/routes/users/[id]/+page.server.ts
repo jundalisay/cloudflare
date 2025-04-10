@@ -7,6 +7,7 @@ import { validateSession, cleanExpiredSessions } from '$lib/server/auth';
 // import { loadWithSession } from '$lib/util';
 
 
+
 export const load: PageServerLoad = async ({ params, cookies }) => {
 
   const sessionId = cookies.get('sessionId');

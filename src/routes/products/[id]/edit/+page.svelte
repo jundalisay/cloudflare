@@ -3,8 +3,19 @@
 	const product = data.product;
 </script>
 
+
+<h1 class="text-2xl font-bold text-gray-800 max-w-xl mx-auto">Edit Product</h1>
+
 <form method="POST" class="max-w-xl mx-auto p-6 space-y-4 bg-white rounded-xl shadow">
-	<h1 class="text-2xl font-bold text-gray-800">Edit Product</h1>
+	
+  <div class="rounded-t-2xl overflow-hidden">
+    <img
+      src={data.product.photo}
+      alt={data.product.name}
+      class="w-full h-64 object-cover"
+    />
+  </div>
+
 
 	<div>
 		<label class="block text-sm font-medium text-gray-700">Name</label>

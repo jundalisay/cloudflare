@@ -11,7 +11,10 @@
   }
 </script>
 
-<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
+
+<!-- <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow"> -->
+
+<div class="max-w-md mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow">
   <LoginForm on:success={handleLoginSuccess} />
 </div>
 

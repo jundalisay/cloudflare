@@ -1,6 +1,8 @@
 # sv
 
 23.10.0
+nodejs latest
+
 
 npx drizzle-kit generate
 

@@ -38,7 +38,7 @@ export const sessions = sqliteTable('sessions', {
 export const posts = sqliteTable('posts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   content: text('content').notNull(),
-  name: text('name').notNull(),
+  username: text('username').notNull(),
   photo: text('photo').default('/none.svg'),
   user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),  

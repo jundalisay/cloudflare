@@ -1,5 +1,10 @@
 # sv
 
+23.10.0
+
+npx drizzle-kit generate
+
+
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Creating a project
@@ -14,12 +19,7 @@ npx sv create
 npx sv create my-app
 ```
 
-
 flutter pub add libsql_dart
-
-
-
-23.10.0
 
 
 ## Developing

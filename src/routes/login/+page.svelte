@@ -12,7 +12,6 @@
 </script>
 
 
-
 <div class="max-w-md mx-auto">
 
   <div class="flex justify-center py-8">

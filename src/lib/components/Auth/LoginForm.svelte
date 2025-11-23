@@ -11,6 +11,7 @@
   let errors = { username: '', password: '', form: '' };
   let loading = false;
   
+
   async function handleSubmit() {
     // Reset errors
     errors = { username: '', password: '', form: '' };
@@ -76,7 +77,7 @@
   />
   
   <div>
-    <Button type="submit" disabled={loading}>
+    <Button type="submit" disabled={loading} class="w-full text-white px-4 py-2 rounded-lg">
       {loading ? 'Logging in...' : 'Login'}
     </Button>
   </div>

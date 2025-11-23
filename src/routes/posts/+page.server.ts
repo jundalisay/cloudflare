@@ -15,28 +15,14 @@ export const load: PageServerLoad = async ({ cookies }) => {
   }
   
   const sessionId = cookies.get('sessionId');
-  console.log('root output:', sessionId);
+
 
   if (sessionId) {
     const result = await validateSession(sessionId);
     if (result.valid) {
 
       const items = await db.select().from(posts);
-
-      // const postsWithUsers = await db
-      //   .select({
-      //     content: posts.content,
-      //     user: {
-      //       username: users.username,
-      //       avatar: users.photo,
-      //     }
-      //   })
-      //   .from(posts)
-      //   .leftJoin(users, eq(posts.user_id, users.id));
-
-      // return { items: postsWithUsers };
-
-      // console.log('page server load: ', items);
+      console.log('page server load: ', items);
       return { user: result.user, items };
 
     } else {
@@ -66,4 +52,3 @@ export const load: PageServerLoad = async ({ cookies }) => {
   const items = await db.select().from(posts);
   return { items };
 };
-

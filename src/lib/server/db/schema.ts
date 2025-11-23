@@ -36,7 +36,7 @@ export const sessions = sqliteTable('sessions', {
 export const posts = sqliteTable('posts', {
   id: text('id').primaryKey(),
   content: text('content').notNull(),
-  user_id: text('user_id').references(() => user.id).notNull(),
+  user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),  
 });
 
@@ -51,7 +51,7 @@ export const products = sqliteTable('products', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
-  user_id: text('user_id').references(() => user.id).notNull(),
+  user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
 
@@ -66,7 +66,7 @@ export const services = sqliteTable('services', {
   photo3: text('photo3'),     
   description: text('description'),
   short_description: text('short_description'),
-  user_id: text('user_id').references(() => user.id).notNull(),
+  user_id: text('user_id').references(() => users.id).notNull(),
   date_created: integer('date_created', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 });
 
@@ -81,10 +81,10 @@ export const transactions = sqliteTable('transactions', {
   notes: text('notes'),
   kind: text('kind'),
   status: text('status'),
-  user_id: text('user_id').references(() => user.id).notNull(),  
-  // transferee_id: text('user_id').references(() => user.id),
-  // giver_id: text('user_id').references(() => user.id).notNull(),
-  // getter_id: text('user_id').references(() => user.id).notNull(), 
+  user_id: text('user_id').references(() => users.id).notNull(),  
+  // transferee_id: text('user_id').references(() => users.id),
+  // giver_id: text('user_id').references(() => users.id).notNull(),
+  // getter_id: text('user_id').references(() => users.id).notNull(), 
   date_accepted: integer('date_accepted', { mode: 'timestamp' }),
   date_cancelled: integer('date_cancelled', { mode: 'timestamp' }),
   date_transferred: integer('date_transferred', { mode: 'timestamp' }),

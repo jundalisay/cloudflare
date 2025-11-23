@@ -1,22 +1,20 @@
 <script>
   import { enhance } from '$app/forms';
-
   const { data } = $props(); 
-
-  // console.log('feed: ', data.items);
-
-
+  
   function formatTimestamp(timestamp) {
-    return new Date(timestamp * 1000).toLocaleString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    });
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 1) return 'just now';
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return date.toLocaleDateString();
   }
 </script>
 
@@ -28,99 +26,39 @@
 
 
 
+<div class="container mx-auto p-4 max-w-2xl">
+  <!-- Post Form -->
+  <div class="bg-white shadow-md p-6 rounded-lg mb-6 border border-gray-200">
+    <h2 class="text-xl font-semibold mb-4">Create a Post</h2>
+    <form method="POST" action="?/createPost" use:enhance>
+      <textarea
+        name="content"
+        rows="4"
+        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        placeholder="What's on your mind?"
+        required
+      ></textarea>
+      <div class="flex justify-end mt-3">
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+          Post
+        </button>
+      </div>
+    </form>
+  </div>
 
-<div class="max-w-2xl mx-auto p-4 py-6">
+  <!-- Posts List -->
   <h1 class="text-2xl font-bold mb-4">Latest Posts</h1>
-
   {#each data.items as post}
     <div class="flex items-start bg-white shadow-md p-4 rounded-lg mb-4 border border-gray-200">
-      <!-- User Avatar -->
-      <!-- <img
-        src={post.user.avatar_url || '/default-avatar.png'}
-        alt="User Avatar"
-        class="w-12 h-12 rounded-full object-cover mr-4"
-      /> -->
-
       <div class="flex-1">
         <!-- User Info & Date -->
-        <div class="flex justify-between items-center">
-          <span class="font-semibold text-gray-800"></span>
-          <span class="text-sm text-gray-500">{post.created_at}</span>
-          <p class="text-gray-600">{formatTimestamp(post.created_at)}</p>
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-semibold text-gray-800">{post.username || 'Anonymous'}</span>
+          <span class="text-sm text-gray-500">{formatTimestamp(post.date_created)}</span>
         </div>
-
-
-
         <!-- Post Content -->
-        <p class="text-gray-700 mt-2">{post.content}</p>
+        <p class="text-gray-700">{post.content}</p>
       </div>
     </div>
   {/each}
 </div>
-
-
-
-
-<!-- <div class="grid mb-8 border border-gray-200 rounded-lg shadow-xs dark:border-gray-700 md:mb-12 md:grid-cols-2 bg-white dark:bg-gray-800"> -->
-
-
-
-<!-- <script>
-  import { fade, fly } from 'svelte/transition';
-  import { cubicOut } from 'svelte/easing';
-  import { goto } from "$app/navigation";
-
-  const handleLogin = () => goto("/login");
-  const handleRegister = () => goto("/register");
-</script>
- -->
-
- <!-- bg-gradient-to-br from-purple-600 to-indigo-800 text-white -->
-<!-- <div class="flex flex-col items-center justify-center h-screen text-center">
-  <img src="/pp.png" alt="icon" class="w-24 h-24 mb-4 animate-bounce">
-  <h1 transition:fade={{ duration: 800, easing: cubicOut }} class="text-5xl font-bold mb-4">Welcome to the Pantrypoints Demo App</h1>
-  <p transition:fly={{ y: 20, duration: 800, easing: cubicOut }} class="text-lg mb-6">Please send us feedback at pantrypoints@gmail.com</p>
-  <div class="space-x-4">
-    <button on:click={handleLogin} class="px-6 py-2 bg-white text-indigo-600 rounded-lg shadow-md hover:bg-gray-200 transition-transform transform hover:scale-105">Login</button>
-    <button on:click={handleRegister} class="px-6 py-2 bg-indigo-500 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-transform transform hover:scale-105">Register</button>
-  </div>
-</div> -->
-
-
-
-<!-- <script lang="ts">
-  import { page } from '$app/stores';
-</script>
-
-<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-  <h1 class="text-2xl font-bold mb-6 text-center">Welcome to Auth App</h1>
-  
-  {#if $page.data.user}
-    <div class="text-center">
-      <p class="mb-4">Logged in as <span class="font-medium">{$page.data.user.username}</span></p>
-      <form action="/logout" method="POST">
-        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-          Logout
-        </button>
-      </form>
-    </div>
-  {:else}
-    <div class="flex flex-col gap-4 items-center">
-      <a 
-        href="/login" 
-        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded w-full text-center"
-      >
-        Login
-      </a>
-      <a 
-        href="/register" 
-        class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded w-full text-center"
-      >
-        Register
-      </a>
-    </div>
-  {/if}
-</div>
-
-
- -->
